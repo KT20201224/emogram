@@ -1,0 +1,15 @@
+# Gradle 관련 파일 제외
+.gradle/
+build/
+
+# IDE 관련 파일 제외
+.idea/
+.vscode/
+
+# 환경 변수 설정 파일 제외
+.env
+application.yml
+application-*.yml
+
+# Mac OS 관련 파일 제외
+.DS_Store

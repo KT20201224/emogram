@@ -9,6 +9,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -44,11 +46,11 @@ class EmotionTypeServiceTest {
     }
 
     @Test
-    @DisplayName(("감정 유형 조회 테스트"))
+    @DisplayName("감정 유형 조회 테스트")
     void findEmotionType(){
         //given
         EmotionType emotion = new EmotionType("기쁨", "#FFD700");
-        when(emotionTypeRepository.save(any(EmotionType.class))).thenReturn(emotion);
+        when(emotionTypeRepository.findByType("기쁨")).thenReturn(Optional.of(emotion));
 
         //when
         EmotionType foundEmotion = emotionTypeService.getEmotionTypeByName("기쁨");

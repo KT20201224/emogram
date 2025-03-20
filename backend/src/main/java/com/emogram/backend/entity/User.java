@@ -32,4 +32,12 @@ public class User {
 
     @Embedded
     private UserExtra userExtra;
+
+    public User(UserInfo userInfo, UserSecurity userSecurity, UserSettings userSettings, UserSocial userSocial, UserExtra userExtra) {
+        this.userInfo = userInfo;
+        this.userSecurity = userSecurity;
+        this.userSettings = userSettings;
+        this.userSocial = userSocial;
+        this.userExtra = userExtra;
+    }
 }

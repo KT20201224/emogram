@@ -4,6 +4,8 @@ import com.emogram.backend.dto.EmotionTypeDto;
 import com.emogram.backend.entity.EmotionType;
 import com.emogram.backend.repository.EmotionTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,7 +26,9 @@ public class EmotionTypeService {
 
     /**
      * 새로운 EmotionType 추가 (관리자용)
+     * 기존 캐시를 무효화하여 최신 데이터를 반영
      */
+    @CacheEvict(value = "emotionTypeCache", allEntries = true)
     public EmotionTypeDto createEmotionType(EmotionTypeDto dto) {
         if (emotionTypeRepository.findByName(dto.getName()).isPresent()) {
             throw new IllegalArgumentException("이미 존재하는 감정 이름입니다.");
@@ -46,7 +50,9 @@ public class EmotionTypeService {
 
     /**
      * 모든 EmotionType 목록 조회
+     * 캐시가 있는 경우 캐시 데이터를 반환하고, 없으면 DB에서 조회 후 캐시에 저장
      */
+    @Cacheable(value = "emotionTypeCache")
     public List<EmotionTypeDto> getAllEmotionTypes() {
         return emotionTypeRepository.findAll().stream()
                 .map(emotionType -> new EmotionTypeDto(emotionType.getName(), emotionType.getColor()))

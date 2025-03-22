@@ -27,5 +27,5 @@ public class UserUpdateRequest {
 
     private String themePreference; // 수정 가능한 테마 설정
 
-    private boolean notificationsEnabled; // 수정 가능한 알림 설정 (true: 활성화, false: 비활성화)
+    private Boolean notificationsEnabled; // 수정 가능한 알림 설정 (true: 활성화, false: 비활성화)
 }

@@ -143,8 +143,10 @@ public class UserService {
             user.getUserSettings().setThemePreference(request.getThemePreference());
         }
 
-        // 알림 설정 수정
-        user.getUserSettings().setNotificationsEnabled(request.isNotificationsEnabled());
+        // 알림 설정 수정 (null 이 아닐 때만 업데이트)
+        if (request.getNotificationsEnabled() != null) {  // 수정: isNotificationsEnabled() -> getNotificationsEnabled()
+            user.getUserSettings().setNotificationsEnabled(request.getNotificationsEnabled());
+        }
 
         userRepository.save(user); // 수정된 사용자 정보 저장
 
@@ -165,5 +167,21 @@ public class UserService {
                 .role(user.getUserSecurity().getRole())
                 .points(user.getUserExtra().getPoints())
                 .build();
+    }
+
+    /**
+     * 사용자 로그인 시 마지막 로그인 시간 업데이트
+     */
+    @Transactional
+    public void updateLastLogin(String email) {
+        // 이메일로 사용자 조회
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new IllegalArgumentException("User not found."));
+
+        // 마지막 로그인 시간 업데이트
+        user.getUserSecurity().setLastLoginAt(LocalDateTime.now());
+
+        // 업데이트된 사용자 정보 저장
+        userRepository.save(user);
     }
 }

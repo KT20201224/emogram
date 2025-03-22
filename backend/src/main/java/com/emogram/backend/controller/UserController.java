@@ -41,14 +41,8 @@ public class UserController {
      */
     @PostMapping("/login")
     public ResponseEntity<String> loginUser(@Valid @RequestBody UserLoginRequest request) {
-        String token = userService.loginUser(request);  // UserService를 통해 로그인 처리 및 JWT 발급
-
-        // 응답 헤더에 JWT 토큰 포함
-        HttpHeaders headers = new HttpHeaders();
-        headers.add(HttpHeaders.AUTHORIZATION, "Bearer " + token);
-
-        // 200(OK) 상태 코드로 토큰 발급 메시지 반환
-        return ResponseEntity.ok().headers(headers).body("Login successful. JWT token issued.");
+        String token = userService.loginUser(request);
+        return ResponseEntity.ok(token);
     }
 
     /**

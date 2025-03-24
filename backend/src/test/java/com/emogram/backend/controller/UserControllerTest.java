@@ -16,6 +16,9 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.lenient;
@@ -81,13 +84,20 @@ class UserControllerTest {
     void loginUser() throws Exception {
         UserLoginRequest request = new UserLoginRequest("test@example.com", "testPassword");
 
+        // Mock으로 가짜 응답 데이터 설정
+        Map<String, String> mockResponse = new HashMap<>();
+        mockResponse.put("token", "mockToken");
+        mockResponse.put("userId", "1");
+
         when(userService.loginUser(any(UserLoginRequest.class))).thenReturn("mockToken");
+        when(userService.getUserIdByEmail(request.getEmail())).thenReturn(1L);
 
         mockMvc.perform(post("/api/users/login")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isOk())
-                .andExpect(content().string("mockToken"));
+                .andExpect(jsonPath("$.token").value("mockToken"))
+                .andExpect(jsonPath("$.userId").value("1"));
     }
 
     @Test

@@ -36,6 +36,13 @@ public class MemoryOrbController {
         return ResponseEntity.ok(memoryOrbService.getMemoryOrbsByUserId(userId));
     }
 
+    // ✅ 오늘의 기억 구슬만 조회하는 API 추가
+    @GetMapping("/user/today")
+    public ResponseEntity<List<MemoryOrbResponse>> getTodayMemoryOrbsByUserId(@RequestParam Long userId) {
+        List<MemoryOrbResponse> response = memoryOrbService.getTodayMemoryOrbsByUserId(userId);
+        return ResponseEntity.ok(response);
+    }
+
     @PutMapping("/{orbId}")
     public ResponseEntity<MemoryOrbResponse> updateMemoryOrb(@PathVariable String orbId,
                                                              @RequestBody MemoryOrbRequest request) {

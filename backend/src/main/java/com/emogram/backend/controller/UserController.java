@@ -45,15 +45,13 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<Map<String, String>> loginUser(@Valid @RequestBody UserLoginRequest request) {
         String token = userService.loginUser(request);
+        Long userId = userService.getUserIdByEmail(request.getEmail());
 
-        // 응답 데이터 맵 생성
         Map<String, String> response = new HashMap<>();
         response.put("token", token);
+        response.put("userId", String.valueOf(userId));  // 사용자 ID도 함께 전달
 
-        // 타입 지정된 ResponseEntity로 반환
-        return ResponseEntity.ok()
-                .header("Authorization", "Bearer " + token)
-                .body(response);
+        return ResponseEntity.ok(response);
     }
 
     /**

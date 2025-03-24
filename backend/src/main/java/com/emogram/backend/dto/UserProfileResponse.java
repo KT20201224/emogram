@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class UserProfileResponse {
 
+    private Long id;                // id
     private String email;           // 사용자의 이메일
     private String nickname;         // 사용자의 닉네임
     private String profileImageUrl;  // 사용자의 프로필 이미지 URL

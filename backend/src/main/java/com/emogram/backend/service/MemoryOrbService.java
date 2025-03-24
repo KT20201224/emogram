@@ -10,7 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -96,5 +98,17 @@ public class MemoryOrbService {
                 .description(memoryOrb.getDescription())
                 .timestamp(memoryOrb.getTimestamp())
                 .build();
+    }
+
+    // 새로운 메서드 추가
+    public List<MemoryOrbResponse> getTodayMemoryOrbsByUserId(Long userId) {
+        LocalDateTime startOfDay = LocalDateTime.of(LocalDate.now(), LocalTime.MIN); // 오늘 00:00:00
+        LocalDateTime endOfDay = LocalDateTime.of(LocalDate.now(), LocalTime.MAX);   // 오늘 23:59:59
+
+        List<MemoryOrb> memoryOrbs = memoryOrbRepository.findTodayMemoryOrbsByUserId(userId, startOfDay, endOfDay);
+
+        return memoryOrbs.stream()
+                .map(this::convertToResponse)
+                .collect(Collectors.toList());
     }
 }

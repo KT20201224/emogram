@@ -184,4 +184,10 @@ public class UserService {
         // 업데이트된 사용자 정보 저장
         userRepository.save(user);
     }
+
+    public Long getUserIdByEmail(String email) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다."));
+        return user.getId();  // UserInfo의 ID 반환
+    }
 }

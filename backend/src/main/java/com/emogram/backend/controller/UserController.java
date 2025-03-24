@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * 사용자 관련 API를 처리하는 컨트롤러 클래스
  */
@@ -40,9 +43,17 @@ public class UserController {
      * 로그인 API (POST /api/users/login)
      */
     @PostMapping("/login")
-    public ResponseEntity<String> loginUser(@Valid @RequestBody UserLoginRequest request) {
+    public ResponseEntity<Map<String, String>> loginUser(@Valid @RequestBody UserLoginRequest request) {
         String token = userService.loginUser(request);
-        return ResponseEntity.ok(token);
+
+        // 응답 데이터 맵 생성
+        Map<String, String> response = new HashMap<>();
+        response.put("token", token);
+
+        // 타입 지정된 ResponseEntity로 반환
+        return ResponseEntity.ok()
+                .header("Authorization", "Bearer " + token)
+                .body(response);
     }
 
     /**

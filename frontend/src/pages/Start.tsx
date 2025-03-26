@@ -1,37 +1,9 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 
-const NUM_ORBS = 20;
-
-interface Orb {
-  id: number;
-  x: number;
-  y: number;
-  size: number;
-  color: string;
-}
-
-const generateOrbs = (): Orb[] => {
-  const colors = ["#FF6B6B", "#FFD93D", "#6BCB77", "#4D96FF", "#A16AE8"];
-  const orbs: Orb[] = [];
-
-  for (let i = 0; i < NUM_ORBS; i++) {
-    orbs.push({
-      id: i,
-      x: Math.random() * window.innerWidth,
-      y: Math.random() * window.innerHeight,
-      size: Math.random() * 40 + 20,
-      color: colors[Math.floor(Math.random() * colors.length)],
-    });
-  }
-
-  return orbs;
-};
-
 const Start: React.FC = () => {
   const navigate = useNavigate();
-  const orbs = useRef<Orb[]>(generateOrbs());
   const [isExiting, setIsExiting] = useState(false);
 
   const handleStart = () => {
@@ -39,42 +11,8 @@ const Start: React.FC = () => {
     setTimeout(() => navigate("/login"), 1000); // 애니메이션 종료 후 이동
   };
 
-  useEffect(() => {
-    const handleResize = () => {
-      orbs.current = generateOrbs();
-    };
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
-
   return (
-    <div className="relative w-full h-screen overflow-hidden bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">
-      {orbs.current.map((orb) => (
-        <motion.div
-          key={orb.id}
-          className="absolute rounded-full"
-          style={{
-            backgroundColor: orb.color,
-            width: orb.size,
-            height: orb.size,
-            top: orb.y,
-            left: orb.x,
-          }}
-          animate={{
-            x: ["0%", "100%", "0%"],
-            y: ["0%", "100%", "0%"],
-          }}
-          transition={{
-            duration: Math.random() * 20 + 10,
-            repeat: Infinity,
-            ease: "linear",
-          }}
-        />
-      ))}
-
+    <div className="relative w-full h-screen overflow-hidden">
       <AnimatePresence>
         {!isExiting && (
           <motion.div

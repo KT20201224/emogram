@@ -23,10 +23,7 @@ Emogram은 사용자의 감정을 구슬 형태로 시각화하고 저장하는 
 	•	Redis (EmotionType 캐싱)
 	•	Spring Security + JWT (인증 및 인가)
 
-🔹 DevOps & ETC
-	•	Docker / Docker Compose
-	•	GitHub Actions (CI/CD 예정)
-	•	Postman (API 테스트)
+
 
 ⚙️ 주요 기능
 	•	회원가입 및 로그인
@@ -48,7 +45,7 @@ Emogram은 사용자의 감정을 구슬 형태로 시각화하고 저장하는 
 	•	수정 및 삭제 가능
 
 🗂 프로젝트 구조
-
+```
 Emogram/
 ├── backend/                  # Spring Boot 백엔드 서버
 │   ├── src/main/java/com/emogram
@@ -62,22 +59,7 @@ Emogram/
 ├── docker-compose.yml
 ├── README.md
 └── ...
-
-🧪 실행 방법
-
-🔹 백엔드 실행
-
-cd backend
-./gradlew bootRun
-
-🔹 프론트엔드 실행
-
-cd frontend
-npm install
-npm run dev
-
-🔹 API 테스트
-	•	Postman에서 JWT 발급 후 헤더에 토큰을 포함하여 테스트
+```
 
 🧭 향후 계획
 	•	AI 감정 분석 기능 (OpenAI API 기반)
@@ -85,13 +67,5 @@ npm run dev
 	•	타임캡슐 모드: 미래에 열람할 수 있는 감정 저장 기능
 	•	Flutter 기반 모바일 앱 개발
 	•	다국어 지원
-
-👨‍💻 개발자
-
-김경태 (Kyoungtae Kim)
-	•	GitHub: https://github.com/your-profile
-	•	Blog: https://velog.io/@your-velog
-
-⸻
 
 이 프로젝트는 감정을 기록하고, 이해하고, 되돌아보는 과정을 통해 스스로를 더 깊이 이해하고자 하는 사람들을 위한 정서적 공간입니다.
